@@ -5,18 +5,24 @@
     </head>
     <body>
         <div class = "navbar">
-            <h1>Options</h1>
-            <button id="buttonStyle1" onClick="initiateCursor()">Cursor</button>
-            <button id="buttonStyle1" onClick="initiateResize()">Resize</button>
-            <button id="buttonStyle1" onClick="initiateColor()">Color</button>
-            <button id="buttonStyle2" onClick="initiateDrawLine()">Line</button>
-            <button id="buttonStyle2" onClick="initiateDrawSquare()">Square</button>
-            <button id="buttonStyle2" onClick="initiateDrawPoligon()">Poligon</button> 
+            <div class="title">
+                <h1>Options</h1>
+            </div>
+            <div class="buttons">
+                <button id="buttonStyle1" onClick="initiateCursor()">Cursor</button>
+                <button id="buttonStyle1" onClick="initiateResize()">Resize</button>
+                <button id="buttonStyle1" onClick="initiateColor()">Color</button>
+                <button id="buttonStyle2" onClick="initiateDrawLine()">Line</button>
+                <button id="buttonStyle2" onClick="initiateDrawSquare()">Square</button>
+                <button id="buttonStyle2" onClick="initiateDrawPoligon()">Poligon</button> 
+            </div>
         </div>
 
-        <canvas id="canvas" width="pixel">
-            Your browser doesn't support HTML5 canvas element. Please change your browser.
-        </canvas>
+        <div class="midsection">
+            <canvas id="canvas" width="pixel">
+                Your browser doesn't support HTML5 canvas element. Please change your browser.
+            </canvas>
+        </div>
 
         <div class="saveLoad">
             <button class="buttonStyle3" onClick="initiateSave()">Save</button>

@@ -1,0 +1,36 @@
+.navbar {
+    background-color: bisque;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+canvas {
+    display: flex;
+    width: 500px;
+    margin-top: 5px;
+    border: 1px solid black;
+}
+
+.midsection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.saveLoad {
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
