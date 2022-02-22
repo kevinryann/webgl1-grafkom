@@ -31,6 +31,38 @@
     </body>
 
     <script>
+        var vertexShaderSource = `
+            attribute vec2 a_position;
 
+            void main() {
+                gl_Position = vec4(a_position, 0, 1);
+            }
+        `;
+
+        var fragmentShaderSource = `
+            precision mediump float;
+            uniform vec4 u_color;
+
+            void main() {
+                gl_FragColor = u_color;
+            }
+        `;
+
+        // Vertex Shaders
+        var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+        gl.shaderSource(vertexShader, vertexShaderSource);
+        gl.compileShader(vertexShader);
+
+        // Fragment Shaders
+        var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+        gl.shaderSource(fragmentShader, fragmentShaderSource);
+        gl.compileShader(fragmentShader);
+
+        // Shader Program
+        var shaderProgram = gl.createProgram();
+        gl.attachShader(shaderProgram, vertexShader);
+        gl.attachShader(shaderProgram, fragmentShader);
+        gl.linkProgram(shaderProgram);
+        gl.useProgram(shaderProgram);
     </script>
 </html>
