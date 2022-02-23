@@ -23,7 +23,7 @@ var color = gl.getAttribLocation(shaderProgram, "color");
 gl.vertexAttribPointer(color, 3, gl.FLOAT, false, 0, 0);
 gl.enableVertexAttribArray(color);
 
-gl.clearColor(0.0, 0.0, 0.0, 0.1);
+gl.clearColor(0.0, 0.0, 0.0, 0.0);
 gl.enable(gl.DEPTH_TEST);
 gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 gl.viewport(0, 0, canvas.width, canvas.height);
@@ -132,4 +132,37 @@ canvasElement.addEventListener('mousemove', function (event) {
 
 canvasElement.addEventListener('mouseup', function (event) {
     mousePosition = null;
+});
+
+// Save webgl canvas to json file
+function save() {
+    var json = {};
+    json.vertices = vertices;
+    json.colors = colors;
+    json.drawObjectInfo = drawObjectInfo;
+
+    var jsonString = JSON.stringify(json);
+    var blob = new Blob([jsonString], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "data.json";
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// load webgl canvas from json file
+var input = document.querySelector("#file");
+
+input.addEventListener("change", function (event) {
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function (event) {
+        var json = JSON.parse(event.target.result);
+        vertices = json.vertices;
+        colors = json.colors;
+        drawObjectInfo = json.drawObjectInfo;
+        drawObject();
+    }
+    reader.readAsText(file);
 });
