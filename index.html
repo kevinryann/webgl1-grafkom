@@ -12,9 +12,9 @@
                 <button id="buttonStyle1" onClick="initiateCursor()">Cursor</button>
                 <button id="buttonStyle1" onClick="initiateResize()">Resize</button>
                 <button id="buttonStyle1" onClick="initiateColor()">Color</button>
-                <button id="buttonStyle2" onClick="initiateDrawLine()">Line</button>
-                <button id="buttonStyle2" onClick="initiateDrawSquare()">Square</button>
-                <button id="buttonStyle2" onClick="initiateDrawPoligon()">Poligon</button> 
+                <button id="buttonStyle2" onClick="initDrawObject('line')">Line</button>
+                <button id="buttonStyle2" onClick="initDrawObject('square')">Square</button>
+                <button id="buttonStyle2" onClick="initDrawObject('poligon')">Poligon</button> 
             </div>
         </div>
 
@@ -31,38 +31,49 @@
     </body>
 
     <script>
-        var vertexShaderSource = `
-            attribute vec2 a_position;
+        var canvas = document.getElementById("canvas");
+        canvas.width = 1000;
+        canvas.height = 480;
+        var gl = canvas.getContext('webgl');
 
-            void main() {
-                gl_Position = vec4(a_position, 0, 1);
-            }
-        `;
+        var vertexShaderSource = `attribute vec3 coordinates;
+            attribute vec3 color;
+            varying vec3 vColor;
+                
+            void main(void) {
+                gl_Position = vec4(coordinates, 1.0);
+                vColor = color;
+            }`;
 
-        var fragmentShaderSource = `
-            precision mediump float;
-            uniform vec4 u_color;
-
-            void main() {
-                gl_FragColor = u_color;
-            }
-        `;
+        var fragmentShaderSource = `precision mediump float;
+                varying vec3 vColor;
+                void main(void) {
+                gl_FragColor = vec4(vColor, 1.);
+            }`;
 
         // Vertex Shaders
         var vertexShader = gl.createShader(gl.VERTEX_SHADER);
-        gl.shaderSource(vertexShader, vertexShaderSource);
-        gl.compileShader(vertexShader);
 
         // Fragment Shaders
         var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-        gl.shaderSource(fragmentShader, fragmentShaderSource);
-        gl.compileShader(fragmentShader);
+
+        var shaderProgram = gl.createProgram();
 
         // Shader Program
-        var shaderProgram = gl.createProgram();
+        gl.shaderSource(vertexShader, vertexShaderSource);
+        gl.shaderSource(fragmentShader, fragmentShaderSource); 
+        gl.compileShader(vertexShader);
+        gl.compileShader(fragmentShader);
+
         gl.attachShader(shaderProgram, vertexShader);
         gl.attachShader(shaderProgram, fragmentShader);
         gl.linkProgram(shaderProgram);
-        gl.useProgram(shaderProgram);
+
+        // Setup bools
+        var nothing = true;
+        var drawLine = false;
     </script>
+
+    <script src="./script/utils.js"></script>
+    <script src="./script/script.js"></script>
 </html>
