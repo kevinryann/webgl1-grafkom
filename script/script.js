@@ -4,6 +4,8 @@ var colors = [];
 var offset = 0;
 var vertexCount = 0;
 var drawObjectInfo = [];
+var objVertex;
+var selectedVertex;
 
 // Create empty buffer
 const vertexBuffer = gl.createBuffer();
@@ -31,6 +33,12 @@ function initDrawObject(object) {
         case "line":
             nothing = false;
             drawLine = true;
+            resizing = false;
+            break;
+        case "resize":
+            nothing = false;
+            drawLine = false;
+            resizing = true;
             break;
     }
     return object;
@@ -50,32 +58,78 @@ function drawObject() {
 }
 
 var canvasElement = document.querySelector("#canvas");
-
-var drawObjectInfo;
+var dummyResizing = 0;
 
 canvasElement.addEventListener("mousedown", function (event) {
     var mousePosition = getMousePosition(canvas, event);
-    var x = mousePosition.x;
-    var y = mousePosition.y;
-    vertices.push(x);
-    vertices.push(y);
 
-    console.log(vertices);
+    if (resizing) {
+        selectedVertex = -1;
+        selectedObject = -1;
+        for(var i = 0; i < vertices.length; i+=2){
+            if((Number(vertices[i]).toFixed(1) == Number(mousePosition.x).toFixed(1)) 
+            && (Number(vertices[i+1]).toFixed(1) == Number(mousePosition.y).toFixed(1))){
+                selectedVertex = i;
+                break;
+            }
+        }
 
-    vertexCount += 1;
-    if (drawLine) {
-        if (vertexCount == 2) {
-            colors.push(1,0,0,0,0,1);
-            drawObjectInfo.push({
-                "mode" : gl.LINES,
-                "offset" : offset,
-                "count" : 2
-            });
-            offset += 2;
-            vertexCount = 0;
+        if(selectedVertex != -1){
+            for(var i = drawObjectInfo.length-1; i >= 0; i--){
+                if(drawObjectInfo[i].off*2 <= selectedVertex){
+                    selectedObject = i;
+                    break;
+                }
+                selectedObject = 0;
+            }  
+        }
 
+        if (selectedObject != -1) {
+            dummyResizing += 1;
+            if (dummyResizing == 2) {
+                selectedVertex = -1;
+                selectedObject = -1;
+                dummyResizing = 0;
+            }
         }
     }
+    else {
+        var x = mousePosition.x;
+        var y = mousePosition.y;
+        vertices.push(x);
+        vertices.push(y);
+
+        vertexCount += 1;
+        if (drawLine) {
+            if (vertexCount == 2) {
+                colors.push(1,0,0,0,0,1);
+                drawObjectInfo.push({
+                    "mode" : gl.LINE_STRIP,
+                    "offset" : offset,
+                    "count" : 2
+                });
+                offset += 2;
+                vertexCount = 0;
+            }
+        }
+    }
+
+    
     drawObject();
 });
 
+canvasElement.addEventListener('mousemove', function (event) {
+    if (resizing) {
+        var mousePosition = getMousePosition(canvas, event);
+        if(selectedVertex != -1){
+            vertices[selectedVertex] = mousePosition.x;
+            vertices[selectedVertex+1] = mousePosition.y;
+        
+            drawObject();
+        }
+    }
+});
+
+canvasElement.addEventListener('mouseup', function (event) {
+    mousePosition = null;
+});

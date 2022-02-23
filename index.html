@@ -10,7 +10,7 @@
             </div>
             <div class="buttons">
                 <button id="buttonStyle1" onClick="initiateCursor()">Cursor</button>
-                <button id="buttonStyle1" onClick="initiateResize()">Resize</button>
+                <button id="buttonStyle1" onClick="initDrawObject('resize')">Resize</button>
                 <button id="buttonStyle1" onClick="initiateColor()">Color</button>
                 <button id="buttonStyle2" onClick="initDrawObject('line')">Line</button>
                 <button id="buttonStyle2" onClick="initDrawObject('square')">Square</button>
@@ -72,6 +72,7 @@
         // Setup bools
         var nothing = true;
         var drawLine = false;
+        var resizing = false;
     </script>
 
     <script src="./script/utils.js"></script>
