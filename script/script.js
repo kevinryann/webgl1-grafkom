@@ -4,12 +4,13 @@ var colors = [];
 var offset = 0;
 var vertexCount = 0;
 var drawObjectInfo = [];
+var vecTemp = [];
 var objVertex;
 var selectedVertex;
 
 // Create empty buffer
-const vertexBuffer = gl.createBuffer();
-const colorBuffer = gl.createBuffer();
+var vertexBuffer = gl.createBuffer();
+var colorBuffer = gl.createBuffer();
 
 // Bind buffer
 gl.useProgram(shaderProgram);
@@ -33,11 +34,19 @@ function initDrawObject(object) {
         case "line":
             nothing = false;
             drawLine = true;
+            drawSquare = false;
+            resizing = false;
+            break;
+        case "square":
+            nothing = false;
+            drawLine = false;
+            drawSquare = true;
             resizing = false;
             break;
         case "resize":
             nothing = false;
             drawLine = false;
+            drawSquare = false;
             resizing = true;
             break;
     }
@@ -50,7 +59,7 @@ function drawObject() {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(color), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 
     for (var i = 0; i < drawObjectInfo.length; i++) {
         gl.drawArrays(drawObjectInfo[i].mode, drawObjectInfo[i].offset, drawObjectInfo[i].count);
@@ -99,8 +108,8 @@ canvasElement.addEventListener("mousedown", function (event) {
         vertices.push(x);
         vertices.push(y);
 
-        vertexCount += 1;
         if (drawLine) {
+            vertexCount += 1;
             if (vertexCount == 2) {
                 colors.push(1,0,0,0,0,1);
                 drawObjectInfo.push({
@@ -111,6 +120,35 @@ canvasElement.addEventListener("mousedown", function (event) {
                 offset += 2;
                 vertexCount = 0;
             }
+        }
+        else if (drawSquare){
+            vecTemp.push(mousePosition);
+            vertexCount += 1;
+            console.log(vecTemp[0].x);
+            console.log(vecTemp[1]);
+            if(vertexCount == 2){
+                let deltaX = (vecTemp[1].x - vecTemp[0].x) * (canvasWidth/canvasHeight);
+                let deltaY = (vecTemp[1].y - vecTemp[0].y) * (canvasHeight/canvasWidth);
+                vertices.push(vecTemp[0].x - deltaY);
+                vertices.push(vecTemp[0].y + deltaX);
+                vertices.push(vecTemp[1].x - deltaY);
+                vertices.push(vecTemp[1].y + deltaX);
+                colors.push(
+                    0, 0, 0,
+                    0, 0, 0,
+                    0, 0, 0,
+                    0, 0, 0);
+                drawObjectInfo.push({
+                    "name" : "square",
+                    "mode" : gl.TRIANGLE_STRIP,
+                    "offset" : offset,
+                    "count" : 4
+                });
+                offset += 4;
+                vertexCount = 0;
+                vecTemp = [];
+            }
+            
         }
     }
 

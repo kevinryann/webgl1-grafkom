@@ -6,3 +6,7 @@ function getMousePosition(canvas, event) {
     };
 }
 
+const canvasWidth = 1000
+const canvasHeight = 480
+const middleX = canvasWidth/2
+const middleY = canvasHeight/2
