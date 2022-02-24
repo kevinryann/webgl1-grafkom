@@ -6,6 +6,15 @@ function getMousePosition(canvas, event) {
     };
 }
 
+function hexToRgbNew(hex) {
+  var arrBuffer = new ArrayBuffer(4);
+  var dataView = new DataView(arrBuffer);
+  dataView.setUint32(0,parseInt(hex, 16),false);
+  var arrByte = new Uint8Array(arrBuffer);
+
+  return [arrByte[1], arrByte[2], arrByte[3]]
+}
+
 const canvasWidth = 1000
 const canvasHeight = 480
 const middleX = canvasWidth/2

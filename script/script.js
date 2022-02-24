@@ -12,6 +12,12 @@ var x2 = 0;
 var y1 = 0;
 var y2 = 0;
 
+nothing = false;
+drawLine = false;
+drawSquare = false;
+drawRectangle = false;
+resizing = false;
+
 // Create empty buffer
 var vertexBuffer = gl.createBuffer();
 var colorBuffer = gl.createBuffer();
@@ -117,14 +123,19 @@ canvasElement.addEventListener("mousedown", function (event) {
         }
     }
     else {
+        hexVal =  document.getElementById("color-input").value;
+        colorRGB = hexToRgbNew(hexVal.replace('#',''));
+        color0 = parseInt(colorRGB[0]);
+        color1 = parseInt(colorRGB[1]);
+        color2 = parseInt(colorRGB[2]);
+
         var x = mousePosition.x;
         var y = mousePosition.y;
-        if (!drawRectangle){
-            vertices.push(x);
-            vertices.push(y);
-        }
+        
 
         if (drawLine) {
+            vertices.push(x);
+            vertices.push(y);
             vertexCount += 1;
             if (vertexCount == 2) {
                 colors.push(1,0,0,0,0,1);
@@ -138,6 +149,8 @@ canvasElement.addEventListener("mousedown", function (event) {
             }
         }
         else if (drawSquare){
+            vertices.push(x);
+            vertices.push(y);
             vecTemp.push(mousePosition);
             vertexCount += 1;
             if(vertexCount == 2){
@@ -179,10 +192,10 @@ canvasElement.addEventListener("mousedown", function (event) {
                 vertices.push(x2);vertices.push(y1);
                 vertices.push(x1);vertices.push(y1);
                 colors.push(
-                    0, 0, 0,
-                    0, 0, 0,
-                    0, 0, 0,
-                    0, 0, 0);
+                    color0, color1, color2,
+                    color0, color1, color2,
+                    color0, color1, color2,
+                    color0, color1, color2);
                 drawObjectInfo.push({
                     "name" : "rectangle",
                     "mode" : gl.TRIANGLE_FAN,

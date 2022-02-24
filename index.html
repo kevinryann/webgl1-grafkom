@@ -8,14 +8,19 @@
             <div class="title">
                 <h1>Options</h1>
             </div>
+            <div class = "color"> 
+                <label>Color Picker</label>
+                <input id="color-input" type="color" value="#000000">
+                <label>Square Size</label>
+                <input id="size-input" type="number" min="1" max "5" value="1">
+            </div>
             <div class="buttons">
-                <button id="buttonStyle1" onClick="initiateCursor()">Cursor</button>
-                <button id="buttonStyle1" onClick="initDrawObject('resize')">Resize</button>
-                <button id="buttonStyle1" onClick="initiateColor()">Color</button>
-                <button id="buttonStyle2" onClick="initDrawObject('line')">Line</button>
-                <button id="buttonStyle2" onClick="initDrawObject('square')">Square</button>
-                <button id="buttonStyle2" onClick="initDrawObject('rectangle')">Rectangle</button>
-                <button id="buttonStyle2" onClick="initDrawObject('poligon')">Poligon</button> 
+                <button id="button-style" onClick="initiateCursor()">Cursor</button>
+                <button id="button-style" onClick="initDrawObject('resize')">Resize</button>
+                <button id="button-style" onClick="initDrawObject('line')">Line</button>
+                <button id="button-style" onClick="initDrawObject('square')">Square</button>
+                <button id="button-style" onClick="initDrawObject('rectangle')">Rectangle</button>
+                <button id="button-style" onClick="initDrawObject('poligon')">Poligon</button> 
             </div>
         </div>
 
@@ -26,7 +31,7 @@
         </div>
 
         <div class="saveLoad">
-            <button class="buttonStyle3" onClick="save()">Save</button>
+            <button id="button-style-2" onClick="save()">Save</button>
             <input type="file" id="file">
         </div>
     </body>
