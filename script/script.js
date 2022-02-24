@@ -149,17 +149,18 @@ canvasElement.addEventListener("mousedown", function (event) {
             }
         }
         else if (drawSquare){
-            vertices.push(x);
-            vertices.push(y);
-            vecTemp.push(mousePosition);
             vertexCount += 1;
-            if(vertexCount == 2){
-                let deltaX = (vecTemp[1].x - vecTemp[0].x) * (canvasWidth/canvasHeight);
-                let deltaY = (vecTemp[1].y - vecTemp[0].y) * (canvasHeight/canvasWidth);
-                vertices.push(vecTemp[0].x - deltaY);
-                vertices.push(vecTemp[0].y + deltaX);
-                vertices.push(vecTemp[1].x - deltaY);
-                vertices.push(vecTemp[1].y + deltaX);
+            if (vertexCount == 1) {
+                const size = parseInt(document.getElementById('size-input').value);
+                x1 = x;
+                y1 = y;
+                x2 = x1 + (size/10);
+                y2 = y1 + (size*(1000/480)/10);
+                vertices.push(x1);vertices.push(y2);
+                vertices.push(x2);vertices.push(y2);
+                vertices.push(x2);vertices.push(y1);
+                vertices.push(x1);vertices.push(y1);
+                
                 colors.push(
                     0, 0, 0,
                     0, 0, 0,
@@ -167,14 +168,17 @@ canvasElement.addEventListener("mousedown", function (event) {
                     0, 0, 0);
                 drawObjectInfo.push({
                     "name" : "square",
-                    "mode" : gl.TRIANGLE_STRIP,
+                    "mode" : gl.TRIANGLE_FAN,
                     "offset" : offset,
                     "count" : 4
                 });
                 offset += 4;
                 vertexCount = 0;
-                vecTemp = [];
-            }
+                x1 = 0;
+                x2 = 0;
+                y1 = 0;
+                y2 = 0;
+                }
         }
         else if (drawRectangle){
             if (vertexCount == 0){
