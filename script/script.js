@@ -124,8 +124,6 @@ canvasElement.addEventListener("mousedown", function (event) {
         else if (drawSquare){
             vecTemp.push(mousePosition);
             vertexCount += 1;
-            console.log(vecTemp[0].x);
-            console.log(vecTemp[1]);
             if(vertexCount == 2){
                 let deltaX = (vecTemp[1].x - vecTemp[0].x) * (canvasWidth/canvasHeight);
                 let deltaY = (vecTemp[1].y - vecTemp[0].y) * (canvasHeight/canvasWidth);
