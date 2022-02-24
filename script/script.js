@@ -7,6 +7,10 @@ var drawObjectInfo = [];
 var vecTemp = [];
 var objVertex;
 var selectedVertex;
+var x1 = 0; 
+var x2 = 0;
+var y1 = 0;
+var y2 = 0;
 
 // Create empty buffer
 var vertexBuffer = gl.createBuffer();
@@ -35,18 +39,28 @@ function initDrawObject(object) {
             nothing = false;
             drawLine = true;
             drawSquare = false;
+            drawRectangle = false;
             resizing = false;
             break;
         case "square":
             nothing = false;
             drawLine = false;
             drawSquare = true;
+            drawRectangle = false;
+            resizing = false;
+            break;
+        case "rectangle":
+            nothing = false;
+            drawLine = false;
+            drawSquare = false;
+            drawRectangle = true;
             resizing = false;
             break;
         case "resize":
             nothing = false;
             drawLine = false;
             drawSquare = false;
+            drawRectangle = false;
             resizing = true;
             break;
     }
@@ -105,8 +119,10 @@ canvasElement.addEventListener("mousedown", function (event) {
     else {
         var x = mousePosition.x;
         var y = mousePosition.y;
-        vertices.push(x);
-        vertices.push(y);
+        if (!drawRectangle){
+            vertices.push(x);
+            vertices.push(y);
+        }
 
         if (drawLine) {
             vertexCount += 1;
@@ -146,7 +162,37 @@ canvasElement.addEventListener("mousedown", function (event) {
                 vertexCount = 0;
                 vecTemp = [];
             }
-            
+        }
+        else if (drawRectangle){
+            if (vertexCount == 0){
+                x1 = x;
+                y1 = y;
+            }
+            if (vertexCount == 1){
+                x2 = x;
+                y2 = y;
+            }
+            vertexCount += 1;
+            if(vertexCount == 2){
+                vertices.push(x1);vertices.push(y2);
+                vertices.push(x2);vertices.push(y2);
+                vertices.push(x2);vertices.push(y1);
+                vertices.push(x1);vertices.push(y1);
+                colors.push(
+                    0, 0, 0,
+                    0, 0, 0,
+                    0, 0, 0,
+                    0, 0, 0);
+                drawObjectInfo.push({
+                    "name" : "rectangle",
+                    "mode" : gl.TRIANGLE_FAN,
+                    "offset" : offset,
+                    "count" : 4
+                });
+                offset += 4;
+                vertexCount = 0;
+                vecTemp = [];
+            }
         }
     }
 
