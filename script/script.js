@@ -216,9 +216,6 @@ canvasElement.addEventListener("mousedown", function (event) {
                 vertices.push(x2);vertices.push(y2);
                 vertices.push(x2);vertices.push(y1);
                 vertices.push(x1);vertices.push(y1);
-                // console.log(colorRGB)
-                // console.log(color0, color1, color2)
-                // console.log(vertices)
                 colors.push(
                     color0, color1, color2,
                     color0, color1, color2,
@@ -236,18 +233,25 @@ canvasElement.addEventListener("mousedown", function (event) {
             }
         }
         else if (drawPolygon) {
-            const verticesPolygonCount = parseInt(document.getElementById('poligon-vertices-input').value);
+            verticesPolygonCount = parseInt(document.getElementById('poligon-vertices-input').value);
             vertexCount += 1;
             vertexPolygon.push([x, y]);
             if (vertexCount == verticesPolygonCount) {
-                vertexPolygon.sort((a, b) => { return a[0] - b[0]; });
-
-                vertexPolygon.forEach(e => { vertices.push(e[0]); vertices.push(e[1]); });   
+                vertexPolygon.sort((a, b) => { 
+                    return a[0] - b[0]; 
+                });
+                vertexPolygon.forEach(e => { 
+                    vertices.push(e[0]);
+                    vertices.push(e[1]); 
+                });
+                for (var i = 0; i < verticesPolygonCount; i++) {
+                    colors.push(color0, color1, color2);
+                }   
                 drawObjectInfo.push({
-                    "name" : "poligon",
+                    "name" : "polygon",
                     "mode" : gl.TRIANGLE_STRIP,
                     "offset": offset,
-                    "count": vertexCount,
+                    "count": parseInt(vertexCount)
                 });
                 offset += vertexCount;
                 vertexPolygonSave.push(vertexPolygon);
