@@ -11,12 +11,15 @@ var x1 = 0;
 var x2 = 0;
 var y1 = 0;
 var y2 = 0;
+var vertexPolygon = [];
+var vertexPolygonSave = [];
 
 nothing = false;
 drawLine = false;
 drawSquare = false;
 drawRectangle = false;
 resizing = false;
+drawPolygon = false;
 
 // Create empty buffer
 var vertexBuffer = gl.createBuffer();
@@ -46,6 +49,8 @@ function initDrawObject(object) {
             drawLine = true;
             drawSquare = false;
             drawRectangle = false;
+            drawPolygon = false;
+            vertexPolygon = [];
             resizing = false;
             break;
         case "square":
@@ -53,6 +58,8 @@ function initDrawObject(object) {
             drawLine = false;
             drawSquare = true;
             drawRectangle = false;
+            drawPolygon = false;
+            vertexPolygon = [];
             resizing = false;
             break;
         case "rectangle":
@@ -60,6 +67,16 @@ function initDrawObject(object) {
             drawLine = false;
             drawSquare = false;
             drawRectangle = true;
+            drawPolygon = false;
+            vertexPolygon = [];
+            resizing = false;
+            break;
+        case "poligon":
+            nothing = false;
+            drawLine = false;
+            drawSquare = false;
+            drawRectangle = false;
+            drawPolygon = true;
             resizing = false;
             break;
         case "resize":
@@ -67,6 +84,8 @@ function initDrawObject(object) {
             drawLine = false;
             drawSquare = false;
             drawRectangle = false;
+            drawPolygon = false;
+            vertexPolygon = [];
             resizing = true;
             break;
     }
@@ -209,6 +228,27 @@ canvasElement.addEventListener("mousedown", function (event) {
                 offset += 4;
                 vertexCount = 0;
                 vecTemp = [];
+            }
+        }
+        else if (drawPolygon) {
+            const verticesPolygonCount = parseInt(document.getElementById('poligon-vertices-input').value);
+            vertexCount += 1;
+            vertexPolygon.push([x, y]);
+            if (vertexCount == verticesPolygonCount) {
+                vertexPolygon.sort((a, b) => { return a[0] - b[0]; });
+
+                vertexPolygon.forEach(e => { vertices.push(e[0]); vertices.push(e[1]); });   
+                drawObjectInfo.push({
+                    "name" : "poligon",
+                    "mode" : gl.TRIANGLE_STRIP,
+                    "offset": offset,
+                    "count": vertexCount,
+                });
+                offset += vertexCount;
+                vertexPolygonSave.push(vertexPolygon);
+                vertexCount = 0;
+                vertexPolygon = [];
+                
             }
         }
     }
