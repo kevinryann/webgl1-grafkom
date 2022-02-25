@@ -17,7 +17,6 @@
                 <input id="poligon-vertices-input" type="number" min="3" value="3">
             </div>
             <div class="buttons">
-                <button id="button-style" onClick="initiateCursor()">Cursor</button>
                 <button id="button-style" onClick="initDrawObject('resize')">Resize</button>
                 <button id="button-style" onClick="initDrawObject('line')">Line</button>
                 <button id="button-style" onClick="initDrawObject('square')">Square</button>
@@ -36,6 +35,25 @@
             <button id="button-style-2" onClick="save()">Save</button>
             <input type="file" id="file">
         </div>
+
+        <br/><br/><br/>
+        <h1>HELP</h1>
+        <h2>Resize :</h2>
+        <p>Tombol resize digunakan untuk menggeser simpul ujung dan mengubah ukuran dari suatu shape.</p>
+        <p>Tombol ini juga berfungsi sebagai pengubah panjang dari garis</p>
+        <h2>Line :</h2>
+        <p>Tombol line digunakan untuk membuat garis. Tekanlah di 2 titik pada canvas untuk menggambar garis lurus dari titik pertama ke titik kedua</p>
+        <h2>Square :</h2>
+        <p>Tombol square digunakan untuk membuat persegi. Ukuran persegi dapat diubah dengan mengubah nilai Square Size</p>
+        <h2>Rectangle :</h2>
+        <p>Tombol rectangle digunakan untuk membuat persegi panjang. Tekanlah di 2 titik pada canvas untuk menggambar persegi panjang dengan panjang diagonal</p>
+        <p>bernilai garis lurus dari titik pertama ke titik kedua</p>
+        <h2>Poligon :</h2>
+        <p>Tombol ini digunakan untuk menggambarkan shape yang tidak beraturan. Untuk menggunakan tombol ini, ubahlah nilai Poligon Vertices terlebih dahulu agar</p>
+        <p>nilainya sesuai dengan jumlah sudut yang diinginkan pada poligon anda. Setelah itu, klik pada canvas sebanyak nilai pada Poligon Vertices</p>
+        <h2>Color Picker :</h2>
+        <p>Color picker digunakan untuk menentukan warna shape yang ingin digambarkan</p>
+        
     </body>
 
     <script>
