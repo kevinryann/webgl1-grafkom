@@ -71,7 +71,7 @@ function initDrawObject(object) {
             vertexPolygon = [];
             resizing = false;
             break;
-        case "poligon":
+        case "polygon":
             nothing = false;
             drawLine = false;
             drawSquare = false;
@@ -144,9 +144,9 @@ canvasElement.addEventListener("mousedown", function (event) {
     else {
         hexVal =  document.getElementById("color-input").value;
         colorRGB = hexToRgbNew(hexVal.replace('#',''));
-        color0 = parseInt(colorRGB[0]);
-        color1 = parseInt(colorRGB[1]);
-        color2 = parseInt(colorRGB[2]);
+        color0 = (parseInt(colorRGB[0])/255);
+        color1 = (parseInt(colorRGB[1])/255);
+        color2 = (parseInt(colorRGB[2])/255);
 
         var x = mousePosition.x;
         var y = mousePosition.y;
@@ -157,7 +157,9 @@ canvasElement.addEventListener("mousedown", function (event) {
             vertices.push(y);
             vertexCount += 1;
             if (vertexCount == 2) {
-                colors.push(1,0,0,0,0,1);
+                colors.push(
+                    color0, color1, color2,
+                    color0, color1, color2);
                 drawObjectInfo.push({
                     "mode" : gl.LINE_STRIP,
                     "offset" : offset,
@@ -181,10 +183,10 @@ canvasElement.addEventListener("mousedown", function (event) {
                 vertices.push(x1);vertices.push(y1);
                 
                 colors.push(
-                    0, 0, 0,
-                    0, 0, 0,
-                    0, 0, 0,
-                    0, 0, 0);
+                    color0, color1, color2,
+                    color0, color1, color2,
+                    color0, color1, color2,
+                    color0, color1, color2);
                 drawObjectInfo.push({
                     "name" : "square",
                     "mode" : gl.TRIANGLE_FAN,
@@ -214,6 +216,9 @@ canvasElement.addEventListener("mousedown", function (event) {
                 vertices.push(x2);vertices.push(y2);
                 vertices.push(x2);vertices.push(y1);
                 vertices.push(x1);vertices.push(y1);
+                // console.log(colorRGB)
+                // console.log(color0, color1, color2)
+                // console.log(vertices)
                 colors.push(
                     color0, color1, color2,
                     color0, color1, color2,
