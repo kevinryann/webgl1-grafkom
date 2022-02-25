@@ -309,6 +309,7 @@ input.addEventListener("change", function (event) {
         var json = JSON.parse(event.target.result);
         vertices = json.vertices;
         colors = json.colors;
+        offset = ((json.vertices).length/2);
         drawObjectInfo = json.drawObjectInfo;
         drawObject();
     }
