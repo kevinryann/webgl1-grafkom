@@ -12,7 +12,6 @@ var x2 = 0;
 var y1 = 0;
 var y2 = 0;
 var vertexPolygon = [];
-var vertexPolygonSave = [];
 
 nothing = false;
 drawLine = false;
@@ -254,7 +253,6 @@ canvasElement.addEventListener("mousedown", function (event) {
                     "count": parseInt(vertexCount)
                 });
                 offset += vertexCount;
-                vertexPolygonSave.push(vertexPolygon);
                 vertexCount = 0;
                 vertexPolygon = [];
                 
