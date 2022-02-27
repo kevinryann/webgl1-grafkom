@@ -236,9 +236,6 @@ canvasElement.addEventListener("mousedown", function (event) {
             vertexCount += 1;
             vertexPolygon.push([x, y]);
             if (vertexCount == verticesPolygonCount) {
-                vertexPolygon.sort((a, b) => { 
-                    return a[0] - b[0]; 
-                });
                 vertexPolygon.forEach(e => { 
                     vertices.push(e[0]);
                     vertices.push(e[1]); 
