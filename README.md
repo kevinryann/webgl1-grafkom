@@ -12,3 +12,27 @@
 
 ### How to Run 
 Buka `index.html` di browser
+
+### Contributions :
+13519172 Muhammad Zubair :
+- Menggambar Poligon
+- Laporan
+
+13519191 Kevin Ryan
+- Init WebGL
+- Menggambar Garis
+- Menggeser Simpul dengan Mouse
+- Save dan Load File
+- Styling (css)
+- Menu Help
+- Laporan
+
+13519209 Wilson Tandya
+- Menggambar Persegi
+- Menggambar Persegi Panjang
+- Mengubah Ukuran Persegi
+- Mengubah Warna
+- Styling (css)
+- Menu help
+- Bug Fixes
+- Laporan
