@@ -13,6 +13,9 @@
 ### How to Run 
 Buka `index.html` di browser
 
+### Contoh gambar arsitektur yang dapat di Load
+file `home.json` pada folder `sample`
+
 ### Contributions :
 13519172 Muhammad Zubair :
 - Menggambar Poligon
